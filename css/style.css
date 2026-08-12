@@ -1322,8 +1322,10 @@ textarea.form-control {
 }
 
 /* --------------------------------------------------------------------------
-   15. レスポンシブ メディアクエリ
+   15. レスポンシブ メディアクエリ (スマートフォン・タブレット対応)
    -------------------------------------------------------------------------- */
+
+/* タブレット・大型スマートフォン表示 (992px以下) のスタイル設定 */
 @media (max-width: 992px) {
   .hero-title {
     font-size: 2.75rem;
@@ -1335,8 +1337,38 @@ textarea.form-control {
   .footer-top {
     grid-template-columns: 1fr 1fr;
   }
+
+  /* 「選ばれる理由」カードグリッドをスマホ・タブレットで縦1列に配置 */
+  .features-grid {
+    grid-template-columns: 1fr; /* 横2列から縦1列に変更 */
+    gap: 28px; /* カード同士に適度な余白を設定 */
+  }
+
+  /* カード内部を画像（上）・テキスト（下）の縦並びに変更 */
+  .feature-card {
+    flex-direction: column; /* 縦並びレイアウトに変更 */
+    height: auto;
+    width: 100%;
+  }
+
+  /* 画像領域の幅を画面いっぱいに広げ、高さと角丸を調整 */
+  .feature-img-wrapper {
+    width: 100%; /* 横幅をカード全体に拡張 */
+    height: 220px; /* スマートフォン表示に最適な高さ */
+  }
+
+  .feature-img-wrapper img {
+    border-radius: 20px 20px 0 0; /* 上部両角のみ丸みをつける */
+  }
+
+  /* テキスト領域の横幅とパディング（余白）を最適化して自然な横書き表示を実現 */
+  .feature-content {
+    width: 100%; /* 横幅をカード全体に拡張 */
+    padding: 28px 24px; /* スマホ画面に合わせた適切な内部余白 */
+  }
 }
 
+/* スマートフォン表示 (768px以下) のスタイル設定 */
 @media (max-width: 768px) {
   .header-cta {
     display: none;
@@ -1377,3 +1409,47 @@ textarea.form-control {
     gap: 30px;
   }
 }
+
+/* 小型スマートフォン表示 (576px以下・375px〜430px等) の微調整 */
+@media (max-width: 576px) {
+  /* カード間の余白調整 */
+  .features-grid {
+    gap: 24px;
+  }
+
+  /* 画像領域の高さを小型スマホ画面に合わせて調整 */
+  .feature-img-wrapper {
+    height: 190px;
+  }
+
+  /* テキスト部分の余白と文字サイズ調整 */
+  .feature-content {
+    padding: 24px 20px;
+  }
+
+  .feature-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .feature-icon-wrapper svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+
+  /* 文章が自然に横書き表示され、途中で崩れないよう調整 */
+  .feature-desc {
+    font-size: 0.925rem;
+    line-height: 1.8;
+    word-break: break-word; /* 長い単語や記号のはみ出しを防止 */
+    overflow-wrap: anywhere;
+  }
+}
+
