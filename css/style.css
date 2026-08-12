@@ -1322,59 +1322,26 @@ textarea.form-control {
 }
 
 /* --------------------------------------------------------------------------
-   15. レスポンシブ メディアクエリ (スマートフォン・タブレット対応)
+   15. レスポンシブ メディアクエリ (スマートフォン・タブレット完全対応)
    -------------------------------------------------------------------------- */
 
-/* タブレット・大型スマートフォン表示 (992px以下) のスタイル設定 */
-@media (max-width: 992px) {
-  .hero-title {
-    font-size: 2.75rem;
-  }
-  .about-split, .contact-wrapper {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .footer-top {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  /* 「選ばれる理由」カードグリッドをスマホ・タブレットで縦1列に配置 */
-  .features-grid {
-    grid-template-columns: 1fr; /* 横2列から縦1列に変更 */
-    gap: 28px; /* カード同士に適度な余白を設定 */
-  }
-
-  /* カード内部を画像（上）・テキスト（下）の縦並びに変更 */
-  .feature-card {
-    flex-direction: column; /* 縦並びレイアウトに変更 */
-    height: auto;
-    width: 100%;
-  }
-
-  /* 画像領域の幅を画面いっぱいに広げ、高さと角丸を調整 */
-  .feature-img-wrapper {
-    width: 100%; /* 横幅をカード全体に拡張 */
-    height: 220px; /* スマートフォン表示に最適な高さ */
-  }
-
-  .feature-img-wrapper img {
-    border-radius: 20px 20px 0 0; /* 上部両角のみ丸みをつける */
-  }
-
-  /* テキスト領域の横幅とパディング（余白）を最適化して自然な横書き表示を実現 */
-  .feature-content {
-    width: 100%; /* 横幅をカード全体に拡張 */
-    padding: 28px 24px; /* スマホ画面に合わせた適切な内部余白 */
-  }
+/* 全体での横スクロール発生を厳格に防止 */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
 }
 
-/* スマートフォン表示 (768px以下) のスタイル設定 */
+/* --------------------------------------------------------------------------
+   画面幅 768px 以下のスマートフォン表示（最優先・完全固定）
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+
+  /* ヘッダー・ナビゲーションのスマホ対応 */
   .header-cta {
-    display: none;
+    display: none !important;
   }
   .hamburger {
-    display: block;
+    display: block !important;
   }
   .nav {
     position: fixed;
@@ -1398,58 +1365,162 @@ textarea.form-control {
     color: #FFFFFF;
     font-size: 1.1rem;
   }
+
+  /* ヒーロータイトルのスマホサイズ調整 */
   .hero-title {
-    font-size: 2.15rem;
+    font-size: 2.15rem !important;
   }
   .hero-sub {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
 
-/* 小型スマートフォン表示 (576px以下・375px〜430px等) の微調整 */
-@media (max-width: 576px) {
-  /* カード間の余白調整 */
+  /* ==========================================================================
+     「選ばれる理由」セクション (features-grid) スマホ表示 完全固定
+     ========================================================================== */
+
+  /* 1. カードグリッド: PCの横2列 (repeat(2, 1fr)) を無効化し、完全1列化 */
   .features-grid {
-    gap: 24px;
+    display: grid !important;
+    grid-template-columns: 1fr !important; /* 横2列ではなく縦1列表示 */
+    gap: 24px !important; /* スマホに適したカード間余白 */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
-  /* 画像領域の高さを小型スマホ画面に合わせて調整 */
+  /* 2. カード本体: 横並びを解除し、縦並び (上が画像、下がテキスト) にリセット */
+  .feature-card {
+    display: flex !important;
+    flex-direction: column !important; /* 横並びから縦並びへ変更 */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important; /* Flexboxの子要素の幅潰れを防止 */
+    height: auto !important;
+    box-sizing: border-box !important;
+    border-radius: 20px !important;
+  }
+
+  /* 3. 画像領域: PCの width: 45% を無効化し、100%全幅に設定 */
   .feature-img-wrapper {
-    height: 190px;
+    width: 100% !important; /* 45%から100%へ上書き */
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 200px !important; /* スマホで自然な写真高さ */
+    flex-shrink: 0 !important;
   }
 
-  /* テキスト部分の余白と文字サイズ調整 */
+  .feature-img-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 20px 20px 0 0 !important; /* 上部の角のみ丸く */
+  }
+
+  /* 4. テキスト領域: PCの width: 55%, padding: 36px 32px を無効化し100%全幅＆適正余白に設定 */
   .feature-content {
-    padding: 24px 20px;
+    width: 100% !important; /* 55%から100%へ上書き */
+    max-width: 100% !important;
+    min-width: 0 !important; /* 幅最小値による1文字潰れを根本解消 */
+    padding: 24px 20px !important; /* 巨大パディングを適切な内側余白に上書き */
+    box-sizing: border-box !important;
+    writing-mode: horizontal-tb !important; /* 横書きを明確に強制指定 */
+    text-orientation: mixed !important;
+    display: block !important;
   }
 
+  /* アイコン領域 */
   .feature-icon-wrapper {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 16px;
-    border-radius: 14px;
+    width: 56px !important;
+    height: 56px !important;
+    margin-bottom: 16px !important;
+    border-radius: 14px !important;
+    flex-shrink: 0 !important;
   }
 
   .feature-icon-wrapper svg {
-    width: 28px;
-    height: 28px;
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  /* 5. カード内見出し: 横書き・自然な改行 */
+  .feature-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 10px !important;
+    line-height: 1.4 !important;
+    writing-mode: horizontal-tb !important; /* 横書き強制 */
+    text-orientation: mixed !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 6. カード内説明文: 横書き・1文字改行の完全防止 */
+  .feature-desc {
+    font-size: 0.925rem !important;
+    line-height: 1.8 !important;
+    color: var(--text-muted) !important;
+    writing-mode: horizontal-tb !important; /* 横書き強制 */
+    text-orientation: mixed !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  /* 他の主要グリッド（サービス・料金・メンバー）もスマホで1列化 */
+  .services-grid,
+  .testimonials-grid,
+  .members-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* フッター最適化 */
+  .footer-top {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   画面幅 992px 以下のタブレット表示対応
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 2.75rem;
+  }
+  .about-split, .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   画面幅 480px 以下の極小スマートフォン表示対応
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .container {
+    width: 92% !important; /* 左右に適切な余白を確保 */
+  }
+
+  .feature-content {
+    padding: 20px 16px !important;
   }
 
   .feature-title {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
+    font-size: 1.15rem !important;
   }
 
-  /* 文章が自然に横書き表示され、途中で崩れないよう調整 */
   .feature-desc {
-    font-size: 0.925rem;
-    line-height: 1.8;
-    word-break: break-word; /* 長い単語や記号のはみ出しを防止 */
-    overflow-wrap: anywhere;
+    font-size: 0.9rem !important;
+    line-height: 1.75 !important;
   }
 }
+
+
 
